@@ -35,6 +35,17 @@ app.get("/students", function (req, res) {
   res.status(200).send(students);
 });
 
+// Get method - to get students by section
+app.get("/students/:section", function (req, res) {
+    let section = req.params.section;
+    let student = students.filter((u) => u.section == section);
+    if (student.length === 0) {
+      res.status(404).send("No students found in section " + section);
+      return;
+    }
+    res.status(200).send(student);
+  });
+
 //Get method - to get single student by id
 app.get("/students/:id", function (req, res) {
   //We can get id from query parameters(query parameters are passed in the URL)
@@ -49,6 +60,21 @@ app.get("/students/:id", function (req, res) {
   // if student is found
   res.status(200).send(student);
 });
+
+// //Get method - to get students by section
+// app.get("/students/:section", function (req, res) {
+//   //We can get section from query parameters(query parameters are passed in the URL)
+//   let section = req.params.section;
+//   // find students by section
+//   let student = students.filter((u) => u.section == section);
+//   // if student is not found
+//   if (!student) {
+//     res.send("Student not found",section).status(404);
+//     return;
+//   }
+//   // if student is found
+//   res.status(200).send(student);
+// });
 
 //Post method to add new student
 app.post("/students", function (req, res) {
